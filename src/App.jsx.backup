@@ -1,0 +1,180 @@
+import { Canvas } from "@react-three/fiber";
+import { Float, OrbitControls } from "@react-three/drei";
+import { gymConfig } from "./config/gymConfig";
+import "./App.css";
+
+function GymScene() {
+  return (
+    <>
+      <ambientLight intensity={1.2} />
+      <directionalLight position={[4, 6, 5]} intensity={2.5} />
+
+      <Float speed={2} rotationIntensity={0.4} floatIntensity={0.8}>
+        <mesh position={[0, 0, 0]}>
+          <boxGeometry args={[2.8, 1.2, 1.2]} />
+          <meshStandardMaterial color="#7c3cff" metalness={0.7} roughness={0.25} />
+        </mesh>
+      </Float>
+
+      <mesh position={[0, -1.2, 0]}>
+        <cylinderGeometry args={[4, 4, 0.15, 64]} />
+        <meshStandardMaterial color="#111318" metalness={0.4} roughness={0.5} />
+      </mesh>
+
+      <OrbitControls
+        enableZoom={false}
+        enablePan={false}
+        autoRotate
+        autoRotateSpeed={0.7}
+      />
+    </>
+  );
+}
+
+function App() {
+  return (
+    <main className="gym-app">
+      <nav className="navbar">
+        <div className="brand">
+          <div className="logo-placeholder">G</div>
+          <span>{gymConfig.name}</span>
+        </div>
+
+        <div className="nav-links">
+          <a href="#about">About</a>
+          <a href="#facilities">Facilities</a>
+          <a href="#membership">Membership</a>
+          <a href="#offers">Offers</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <a className="nav-button" href="#membership">
+          Join Now
+        </a>
+      </nav>
+
+      <section className="hero">
+        <div className="hero-content">
+          <p className="eyebrow">PREMIUM FITNESS EXPERIENCE</p>
+
+          <h1>
+            Train Hard.
+            <br />
+            <span>Live Strong.</span>
+          </h1>
+
+          <p className="hero-text">
+            Discover a premium fitness space designed to help you become
+            stronger, healthier and more confident.
+          </p>
+
+          <div className="hero-buttons">
+            <a className="primary-button" href="#membership">
+              Explore Membership
+            </a>
+
+            <a className="secondary-button" href="#facilities">
+              Explore Gym
+            </a>
+          </div>
+        </div>
+
+        <div className="hero-3d">
+          <Canvas camera={{ position: [5, 3, 6], fov: 45 }}>
+            <GymScene />
+          </Canvas>
+        </div>
+      </section>
+
+      <section className="info-strip">
+        <div>
+          <strong>Premium Equipment</strong>
+          <span>Modern training environment</span>
+        </div>
+
+        <div>
+          <strong>Flexible Memberships</strong>
+          <span>Plans for every goal</span>
+        </div>
+
+        <div>
+          <strong>Open Daily</strong>
+          <span>{gymConfig.timings.weekdays}</span>
+        </div>
+      </section>
+
+      <section id="about" className="content-section">
+        <p className="eyebrow">ABOUT THE GYM</p>
+        <h2>More than a gym.</h2>
+        <p>
+          A premium fitness destination built around quality equipment,
+          comfortable spaces and an inspiring training environment.
+        </p>
+      </section>
+
+      <section id="facilities" className="content-section dark-section">
+        <p className="eyebrow">FACILITIES</p>
+        <h2>Everything you need.</h2>
+
+        <div className="feature-grid">
+          <div>Cardio Zone</div>
+          <div>Strength Zone</div>
+          <div>Free Weights</div>
+          <div>Functional Area</div>
+        </div>
+      </section>
+
+      <section id="membership" className="content-section">
+        <p className="eyebrow">MEMBERSHIPS</p>
+        <h2>Choose your plan.</h2>
+
+        <div className="pricing-grid">
+          <article className="price-card">
+            <span>MONTHLY</span>
+            <h3>₹1,999</h3>
+            <p>Flexible month-to-month membership.</p>
+            <button>View Details</button>
+          </article>
+
+          <article className="price-card featured">
+            <span>YEARLY</span>
+            <h3>₹14,999</h3>
+            <p>Save more with our annual membership.</p>
+            <button>View Details</button>
+          </article>
+        </div>
+      </section>
+
+      <section id="offers" className="content-section dark-section">
+        <p className="eyebrow">SPECIAL OFFERS</p>
+        <h2>More membership. More value.</h2>
+        <p>
+          Seasonal offers, annual discounts and special membership packages
+          can be displayed here.
+        </p>
+      </section>
+
+      <section id="contact" className="contact-section">
+        <p className="eyebrow">READY TO JOIN?</p>
+        <h2>Start your fitness journey.</h2>
+
+        <a className="primary-button" href={`https://wa.me/${gymConfig.contact.whatsapp.replace(/\D/g, "")}`}>
+          Contact on WhatsApp
+        </a>
+
+        <p className="contact-details">
+          {gymConfig.location.address}
+          <br />
+          {gymConfig.location.city}
+        </p>
+      </section>
+
+      <footer>
+        <strong>{gymConfig.name}</strong>
+        <span>© 2026. All rights reserved.</span>
+      </footer>
+    </main>
+  );
+}
+
+export default App;
